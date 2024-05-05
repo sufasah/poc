@@ -37,12 +37,10 @@ public class KMP : ISubstringSearchable
                 j++;
                 i++;
             }
-            else if (j <= 0)
-                i++;
-            else if (kmpTable.TryGetValue(j, out int matchLength))
-                j = matchLength;
+            else if (j >= 1)
+                j = kmpTable.TryGetValue(j, out int matchLength) ? matchLength : 0;
             else
-                j = 0;
+                i++;
         }
 
         if (j < substring.Length)
