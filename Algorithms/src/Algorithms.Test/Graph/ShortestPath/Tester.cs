@@ -1,5 +1,6 @@
 using System.Text;
 using Algorithms.Graph.ShortestPath;
+using Algorithms.Test.Core.Random;
 using static Algorithms.Graph.Graph;
 
 namespace Algorithms.Test.Graph.ShortestPath;
@@ -8,9 +9,7 @@ public static class Tester
 {
     public static void Test(IShortestPathFindable findable)
     {
-        var random = new Random();
         const short nodeCount = 10;
-
         for (var testCount = 0; testCount < 100; testCount++)
         {
             var nodes = new Node[nodeCount];
@@ -21,17 +20,17 @@ public static class Tester
             for (var i = 0; i < nodeCount; i++)
                 for (var j = 0; j < nodeCount; j++)
                     if (i != j)
-                        nodes[i].AddEdge(nodes[j], random.Next(1, 10));
+                        nodes[i].AddEdge(nodes[j], Generator.Random.Next(1, 10));
 
-            var from = random.Next(0, nodeCount);
+            var from = Generator.Random.Next(0, nodeCount);
             var to = from;
             while (to == from)
-                to = random.Next(0, nodeCount);
+                to = Generator.Random.Next(0, nodeCount);
 
             var actualPath = findable.FindShortestPath(nodes[from], nodes[to]);
             var allPaths = DepthFirstSearch.FindAllPaths(nodes[from], nodes[to]);
 
-            AssertionHepler.WithMessage(
+            AssertionHelper.WithMessage(
                 () => Assert.Contains(
                     allPaths.GroupBy(GetPathCost).MinBy(g => g.Key),
                     path => actualPath.SequenceEqual(path)),

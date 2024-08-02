@@ -2,7 +2,7 @@ using Xunit.Sdk;
 
 namespace Algorithms.Test;
 
-public static class AssertionHepler
+public static class AssertionHelper
 {
     public static void WithMessage(Action assertion, Func<string> messageFactory)
     {

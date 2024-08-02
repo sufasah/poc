@@ -1,8 +1,10 @@
 
 using System.Text;
 using Algorithms.Sorting;
+using Algorithms.Test.Core.Random;
 
 namespace Algorithms.Test.Sorting;
+using Array = System.Array;
 
 public static class Tester
 {
@@ -15,9 +17,8 @@ public static class Tester
             var arr = new int[arrSize];
             var arrFirst = new int[arrSize];
 
-            var rand = new Random();
             for (int i = 0; i < arr.Length; i++)
-                arr[i] = rand.Next(1, 1000);
+                arr[i] = Generator.Random.Next(1, 1000);
             arr.CopyTo(arrFirst, 0);
 
             sortable.Sort(arr);
@@ -26,7 +27,7 @@ public static class Tester
             arr.CopyTo(sorted, 0);
             Array.Sort(sorted);
 
-            AssertionHepler.WithMessage(
+            AssertionHelper.WithMessage(
                 () => Assert.Equal(sorted, arr),
                 () => new StringBuilder()
                     .AppendLine("First Array:")
